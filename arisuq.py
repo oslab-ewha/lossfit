@@ -1,3 +1,4 @@
+import math
 from datetime import datetime
 
 class ArisuQ:
@@ -30,7 +31,10 @@ class ArisuQ:
 
     def __get_float(self, valstr):
         try:
-            return float(valstr)
+            val = float(valstr)
+            if math.isnan(val):
+                self.is_loss = True
+            return val
         except ValueError:
             self.is_loss = True
             return float('nan')

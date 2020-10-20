@@ -11,9 +11,6 @@ class ArisuData:
     __reader = None
     __drop_loss_item = False
 
-    def __init__(self):
-        pass
-
     def load(self, path, drop_loss_item=False):
         try:
             f = open(path, "r", encoding="utf-8")
@@ -64,3 +61,15 @@ class ArisuData:
         for row in self.__reader:
             aq = arisuq.ArisuQ(row)
             self.arisuqs.append(aq)
+
+    def save(self, path):
+        with open(path, "w") as fw:
+            fw.write("#date checker turbidity ph chlorine temperature conductivity\n")
+
+            for aq in self.arisuqs:
+                if not aq.checker is None:
+                    checker = aq.checker
+                else:
+                    checker = self.checker_names[aq.checkerid - 1]
+                fw.write("{}, {}, {}, {}, {}, {}, {}\n".format(aq.dt, checker, aq.turbidity, aq.ph,
+                                                               aq.chlorine, aq.temperature, aq.conductivity))

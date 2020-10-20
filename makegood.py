@@ -16,13 +16,8 @@ class MakeGood:
         if not data.load(path, drop_loss_item=True):
             return 1
 
-        with open(path_res, "w") as fw:
-            fw.write("#date checker turbidity ph chlorine temperature conductivity\n")
+        data.save(path_res)
 
-            for aq in data.arisuqs:
-                fw.write("{}, {}, {}, {}, {}, {}, {}\n".format(aq.dt, data.checker_names[aq.checkerid - 1],
-                                                               aq.turbidity, aq.ph, aq.chlorine, aq.temperature,
-                                                               aq.conductivity))
         return 0
 
 if __name__ == "__main__":
